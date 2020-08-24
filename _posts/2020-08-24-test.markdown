@@ -15,5 +15,5 @@ Want to test.
 3. Have you ever tried just turning off the TV, sitting down with your children, and hitting them?
 
 
-![]({{ site.baseurl }}/images/01.jpg)
+![]({{ site.baseurl }}/images/02.jpg)
 *Minimalism*

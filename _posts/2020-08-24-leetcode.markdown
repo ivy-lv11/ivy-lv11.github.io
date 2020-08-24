@@ -5,5 +5,7 @@ date:   2020-08-24 15:01:35 +0300
 image:  07.jpg
 tags:   Home
 ---
-
-用来记录leetcode上面一些有趣的题目
+### 用来记录leetcode上面一些有趣的题目
+1. DFS
+2. BFS
+3. 动态规划

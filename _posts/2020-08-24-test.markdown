@@ -1,0 +1,19 @@
+---
+layout: post
+title:  Moving to a new place
+date:   2018-07-05 15:01:35 +0300
+image:  05.jpg
+tags:   Home
+---
+Want to test. 
+
+## 试一试
+
+
+1. We need rest. The spirit is willing, but the flesh is spongy and bruised.
+2. Fry, we have a crate to deliver.
+3. Have you ever tried just turning off the TV, sitting down with your children, and hitting them?
+
+
+![]({{ site.baseurl }}/images/01.jpg)
+*Minimalism*

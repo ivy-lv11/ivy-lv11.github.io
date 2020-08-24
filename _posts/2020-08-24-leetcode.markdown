@@ -1,11 +1,31 @@
 ---
 layout: post
-title:  Leetcode
+title:  Leetcode-DP
 date:   2020-08-24 15:01:35 +0300
 image:  07.jpg
 tags:   Home
 ---
-### 用来记录leetcode上面一些有趣的题目
-1. DFS
-2. BFS
-3. 动态规划
+## 用来记录leetcode上面一些关于DP的题目
+1. #### 不同的二叉搜索树
+*给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种*
+```
+class Solution {
+public:
+    int numTrees(int n) {
+        int* data = new int[n+1];
+        data[0] = 1;
+        data[1] = 1;
+        for(int i=2;i<n+1;i++)
+        {
+            int s = 0;
+            for(int j=1;j<=i;j++)
+            {
+                s += data[j-1]*data[i-j];
+            }
+            data[i] = s;
+        }
+        return data[n];
+
+    }
+};
+```

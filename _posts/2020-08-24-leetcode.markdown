@@ -8,7 +8,8 @@ tags:   Home
 ## 用来记录leetcode上面一些关于DP的题目
 1. #### 不同的二叉搜索树
 *给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种*
-解题思路：根据递推式$f(n) = \sum_{i=1}^{n} f(k-1)f(n-k)$
+解题思路：根据递推式
+$$f(n) = \sum_{i=1}^{n} f(k-1)f(n-k)$$
 ```
 class Solution {
 public:

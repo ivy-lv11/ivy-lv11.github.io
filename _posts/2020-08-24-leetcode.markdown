@@ -68,3 +68,42 @@ public:
 };
 
 ```
+
+#### 3. 连续子数组和
+*给定一个包含 非负数 的数组和一个目标 整数 k，编写一个函数来判断该数组是否含有连续的子数组，其大小至少为 2，且总和为 k 的倍数，即总和为 nk，其中 n 也是一个整数*  
+解题思路：DP
+```
+class Solution {
+
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        if(k==0)
+        {
+            for(int i=0;i<nums.size()-1;i++)
+            {
+                if(nums[i]==0 && nums[i+1]==0)
+                    return true;
+            }
+            return false;
+
+        }
+        int* dp = new int[nums.size()*nums.size()];
+        int len = nums.size();
+        for(int i=0;i<nums.size();i++)
+            dp[i*nums.size()+i] = nums[i];
+        for(int i=0;i<nums.size();i++)
+        {
+            for(int j=i+1;j<nums.size();j++)
+            {
+                dp[i*len+j] = (dp[i*len+j-1]+nums[j])%k;
+                if(dp[i*len+j]==0)
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+```
+
+
+

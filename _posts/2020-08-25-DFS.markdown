@@ -7,7 +7,7 @@ tags:   Home
 ---
 ## 记录leetcode上面DFS的题目
 #### 1. 1519
-思路：无向图上的DFS
+思路：无向图上的DFS。用link作为邻接矩阵，用count记下子树中每个字母的出现次数
 ```
 class Solution {
     vector<vector<int>> count;
@@ -56,6 +56,66 @@ public:
             }
         }
         return true;      
+    }
+};
+```
+
+#### 2. 检查搜索二叉树（面试题04.05）[题目]{https://leetcode-cn.com/problems/legal-binary-search-tree-lcci/}
+思路：递归，左右子树都是搜索二叉树，且左子树最大值小于根节点的值，且右子树最小值大于根结点的值，return true; 否则return false
+```
+struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+
+class Solution {
+public:
+    int get_min(TreeNode* ptr)
+    {
+        TreeNode* tmp = ptr;
+        while(tmp->left!=NULL)
+            tmp = tmp->left;
+        return tmp->val;
+    }
+    int get_max(TreeNode* ptr)
+    {
+          TreeNode* tmp = ptr;
+        while(tmp->right!=NULL)
+            tmp = tmp->right;
+        return tmp->val;  
+    }
+    bool isValidBST(TreeNode* root) {
+        if(root==NULL)
+            return true;
+        if(root->left==NULL && root->right==NULL)
+            return true;
+        else if(root->left==NULL && root->right!=NULL)
+        {
+            bool b1 = isValidBST(root->right);
+            if(b1 && get_min(root->right) > root->val)
+                return true;
+            else
+                return false;
+        }
+        else if(root->left!=NULL && root->right==NULL )
+        {
+            bool b1 = isValidBST(root->left);
+            if(b1 && get_max(root->left) < root->val)
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            bool b1 = isValidBST(root->left);
+            bool b2 = isValidBST(root->right);
+            if(b1 && b2 && root->val>get_max(root->left) && get_min(root->right) >root->val)
+                return true;
+            return false;
+        }
+        return false;
     }
 };
 ```

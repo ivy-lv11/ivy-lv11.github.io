@@ -6,8 +6,56 @@ image:  07.jpg
 tags:   Home
 ---
 ## 记录leetcode上面DFS的题目
-#### 1. 检查网格中是否存在有效路径（1391）
-思路：
+#### 1. 1519
+思路：无向图上的DFS
 ```
-
+class Solution {
+    vector<vector<int>> count;
+    vector<vector<int>> link;
+    int* map;
+    string label;
+public:
+    vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        count.resize(n);
+        link.resize(n);
+        label = labels;
+        for(int i=0;i<n;i++)
+        {
+            count[i].resize(26);
+        }
+        for(int i=0;i<edges.size();i++)
+        {
+            link[edges[i][0]].push_back(edges[i][1]);
+            link[edges[i][1]].push_back(edges[i][0]);
+        }
+        
+        map = new int[n];
+        memset(map,0,n*sizeof(int));
+        dfs(0);
+        vector<int> re;
+        for(int i=0;i<n;i++)
+        {
+            re.push_back(count[i][label[i]-'a']);
+        }
+        return re;
+    }
+    bool dfs(int id)
+    {
+        if(map[id]==1)
+            return false;
+        map[id] = 1;
+        count[id][label[id]-'a']++;
+        if(link[id].empty()==true)
+            return false;
+        for(int i=0;i<link[id].size();i++)
+        {
+            bool x = dfs(link[id][i]);
+            if(x!=false){
+            for(int k=0;k<26;k++)
+                count[id][k] += count[link[id][i]][k];
+            }
+        }
+        return true;      
+    }
+};
 ```

@@ -236,4 +236,59 @@ public:
 ```
 
 #### 6. [求根节点到叶节点的数字之和](https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/)
+思路：直接在树上DFS，注意转成string，可以方便的连接
+```
+class Solution {
+public:
+    int sumNumbers(TreeNode* root) {
+        vector<string> re = dfs(root);
+        int sum= 0;
+        for(vector<string>::iterator it = re.begin();it!=re.end();it++)
+            sum += atoi(it->c_str());
+        return sum;
 
+    }
+    vector<string> dfs(TreeNode* root)
+    {
+        vector<string> re;
+        if(root==NULL)
+            return re;
+        if(root->left==NULL && root->right==NULL)
+        {
+            int x = root->val;
+            char s[20];
+            sprintf(s,"%d",x);
+
+            re.push_back(string(s));
+            return re;
+        }
+        vector<string> l = dfs(root->left);
+        vector<string> r = dfs(root->right);
+        int val = root->val;
+        char str[5];
+        sprintf(str,"%d",val);
+        string str2(str);
+        for(vector<string>::iterator it = l.begin();it!=l.end();it++)
+        {
+            string str3 = *it;
+            string str4 = str2+str3;
+            re.push_back(str4);
+
+        }
+        for(vector<string>::iterator it = r.begin();it!=r.end();it++)
+        {
+            string str3 = *it;
+            string str4 = str2+str3;
+            re.push_back(str4);
+
+        }
+        return re;
+    }
+
+};
+```
+**感觉贴代码也没啥用，所以下面的就不贴代码了**
+#### 7.[朋友圈](https://leetcode-cn.com/problems/friend-circles/)
+思路：求解连通分量的个数，直接DFS就好
+
+#### 8. 

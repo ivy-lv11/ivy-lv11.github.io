@@ -170,3 +170,70 @@ public:
     }   
 };
 ```
+
+#### 4. [池塘面积](https://leetcode-cn.com/problems/pond-sizes-lcci/)
+思路：DFS，在图上进行DFS
+```
+class Solution {
+    vector<vector<int>> dic;
+public:
+    vector<int> pondSizes(vector<vector<int>>& land) {
+        vector<int> re;
+        for(int i=0;i<land.size();i++)
+        {
+            vector<int> temp;
+            for(int j=0;j<land[0].size();j++)
+                temp.push_back(0);
+            dic.push_back(temp);
+        }
+
+        for(int i=0;i<land.size();i++)
+        {
+            for(int j=0;j<land[0].size();j++)
+            {
+               int count = dfs(i,j,land);
+               if(count!=0)
+                    re.push_back(count); 
+            }
+        }
+        sort(re.begin(),re.end());
+        return re;
+    }
+    int dfs(int i,int j,vector<vector<int>>& land)
+    {
+        if(dic[i][j]==1)
+            return 0;
+        dic[i][j] = 1;
+        int x = 0;
+        if(land[i][j]==0)
+        {
+            x ++;
+            if(i+1<land.size())
+                x += dfs(i+1,j,land);
+            if(j+1<land[0].size())
+                x += dfs(i,j+1,land);
+            if(i-1>=0)
+                x += dfs(i-1,j,land);
+            if(j-1 >=0)
+                x += dfs(i,j-1,land);
+            if(i+1<land.size() && j+1<land[0].size())
+                x += dfs(i+1,j+1,land);
+            if(i+1<land.size() && j-1 >=0)
+                x += dfs(i+1,j-1,land);
+            if(i-1>=0 && j+1 <land[0].size())
+                x += dfs(i-1,j+1,land);
+            if(i-1>=0 && j-1>=0 )
+                x += dfs(i-1,j-1,land);
+        }
+        return x;
+    }
+};
+```
+
+#### 5.[翻转二叉树匹配](https://leetcode-cn.com/problems/flip-binary-tree-to-match-preorder-traversal/)
+```
+
+```
+
+#### 6. [求根节点到叶节点的数字之和](https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/)
+

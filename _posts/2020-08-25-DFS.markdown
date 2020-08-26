@@ -287,8 +287,12 @@ public:
 
 };
 ```
-**感觉贴代码也没啥用，所以下面的就不贴代码了**
+**感觉贴代码也没啥用orz，所以下面的就不贴代码了**
 #### 7.[朋友圈](https://leetcode-cn.com/problems/friend-circles/)
 思路：求解连通分量的个数，直接DFS就好
 
-#### 8. 
+#### 8. [婴儿名字](https://leetcode-cn.com/problems/baby-names-lcci/)
+思路：三步走
+* 建立邻接矩阵，把问题转化成为熟悉的图问题
+* 在图上面进行DFS，找到各个连通分量
+* 对连通分量进行计数，输出

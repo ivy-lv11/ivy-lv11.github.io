@@ -60,7 +60,7 @@ public:
 };
 ```
 
-#### 2. 检查搜索二叉树（面试题04.05）[题目](https://leetcode-cn.com/problems/legal-binary-search-tree-lcci/)
+#### 2. [检查搜索二叉树](https://leetcode-cn.com/problems/legal-binary-search-tree-lcci/)
 思路：递归，左右子树都是搜索二叉树，且左子树最大值小于根节点的值，且右子树最小值大于根结点的值，return true; 否则return false
 ```
 struct TreeNode {
@@ -117,5 +117,56 @@ public:
         }
         return false;
     }
+};
+```
+#### 3. [字母组合](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)  
+思路：回溯算法
+```
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        map<char,string> dict;
+        dict['2'] = string("abc");
+        dict['3'] = string("def");
+        dict['4'] = string("ghi");
+        dict['5'] = string("jkl");
+        dict['6'] = string("mno");
+        dict['7'] = string("pqrs");
+        dict['8'] = string("tuv");
+        dict['9'] = string("wxyz");
+        vector<string> re;
+        for(int i=0;i<digits.size();i++)
+        {
+            if(re.empty())
+            {
+                char ch = digits[i];
+                for(int j=0;j<dict[ch].size();j++)
+                {
+                    char add = dict[ch][j];
+                    char t[10];
+                    sprintf(t,"%c",add);
+                    re.push_back(string(t));
+                }
+            }
+            else
+            {
+                char ch = digits[i];
+                vector<string> pre ;
+                for(int j=0;j<dict[ch].size();j++)
+                {
+                    char add = dict[ch][j];
+                    char t[10];
+                    sprintf(t,"%c",add);
+                    string temp(t);
+                    for(int k=0;k<re.size();k++)
+                    {
+                        pre.push_back( re[k]+temp);
+                    }
+                }
+                re = pre;
+            }
+        }
+        return re;
+    }   
 };
 ```

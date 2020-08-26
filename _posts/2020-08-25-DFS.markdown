@@ -60,7 +60,7 @@ public:
 };
 ```
 
-#### 2. 检查搜索二叉树（面试题04.05）[题目]{https://leetcode-cn.com/problems/legal-binary-search-tree-lcci/}
+#### 2. 检查搜索二叉树（面试题04.05）[题目](https://leetcode-cn.com/problems/legal-binary-search-tree-lcci/)
 思路：递归，左右子树都是搜索二叉树，且左子树最大值小于根节点的值，且右子树最小值大于根结点的值，return true; 否则return false
 ```
 struct TreeNode {

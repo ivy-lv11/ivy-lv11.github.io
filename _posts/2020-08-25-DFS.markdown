@@ -287,7 +287,7 @@ public:
 
 };
 ```
-**感觉贴代码也没啥用orz，所以下面的就不贴代码了**
+
 #### 7.[朋友圈](https://leetcode-cn.com/problems/friend-circles/)
 思路：求解连通分量的个数，直接DFS就好
 
@@ -295,5 +295,71 @@ public:
 思路：可以采用DFS三步走
 * 建立邻接矩阵，把问题转化成为熟悉的图问题
 * 在图上面进行DFS，找到各个连通分量
-* 对连通分量进行计数，输出
+* 对连通分量进行计数，输出  
 当然更快的方法是使用并查集，这在后面会专门有一节blog
+
+#### 9. [树左下角的值](https://leetcode-cn.com/problems/find-bottom-left-tree-value/)
+思路：这一题直接去BFS，按层遍历访问节点，自然得到最左边的
+
+#### 10. [二分类](https://leetcode-cn.com/problems/possible-bipartition/)
+思路：可不就是算法导论DFS一道课后习题嘛！dislike关系构成邻接矩阵，然后DFS，染色检查。注意：图不一定是联通的，可能存在多个连通分量！
+```
+class Solution {
+    vector<vector<int>> link;
+    int* ptr;
+public:
+    bool possibleBipartition(int N, vector<vector<int>>& dislikes) {
+       // vector<vector<int>> link;
+        ptr = new int[N];
+        memset(ptr,-1,sizeof(int)*N);
+        link.resize(N);
+        for(int i=0;i<N;i++)
+        {
+            vector<int> temp;
+            for(int j=0;j<N;j++)
+                temp.push_back(0);
+            //link.push_back(temp);
+        }
+        for(int i=0;i<dislikes.size();i++)
+        {
+            int x = dislikes[i][0];
+            int y = dislikes[i][1];
+            link[x-1].push_back(y-1);
+            link[y-1].push_back(x-1);
+        }
+        for(int i=0;i<N;i++)
+        {
+            if(ptr[i]==-1)
+            {
+                bool r = dfs(i,0);
+                if(r==false)
+                    return false;
+            }
+            else
+                continue;
+        }
+    }
+    bool dfs(int id,int color)
+    {
+        if(ptr[id]!=-1)
+        {
+            if(ptr[id]==color) 
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            ptr[id] = color;
+            int x = (color==1?0:1);
+            for(int i=0;i<link[id].size();i++)
+            {            
+                    bool r =dfs(link[id][i],x);
+                    if(r==false)
+                        return false;                
+            }
+            return true;
+        }      
+    }
+};
+```

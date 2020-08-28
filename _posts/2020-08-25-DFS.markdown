@@ -363,3 +363,13 @@ public:
     }
 };
 ```
+
+#### 11. (路径之和)[https://leetcode-cn.com/problems/path-sum-ii/]
+思路：DFS+回溯
+
+#### 12. (字符串解码)[https://leetcode-cn.com/problems/decode-string/]
+思路：用栈
+
+#### 13. (01矩阵)[https://leetcode-cn.com/problems/01-matrix/]
+
+

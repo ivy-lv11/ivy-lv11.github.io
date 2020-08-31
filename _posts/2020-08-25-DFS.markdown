@@ -415,6 +415,13 @@ public:
     }
 };
 ```
+#### 16. [中序遍历的后继者](https://leetcode-cn.com/problems/successor-lcci/)
+思路：递归找到中序遍历的节点顺序，存储下来，然后找到要求节点的下一个节点
+
+*还没有写完*
+#### 16. [收集树上所有苹果的最短时间](https://leetcode-cn.com/problems/minimum-time-to-collect-all-apples-in-a-tree/)
+
+
 
 
 

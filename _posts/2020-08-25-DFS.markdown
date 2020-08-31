@@ -418,6 +418,66 @@ public:
 #### 16. [中序遍历的后继者](https://leetcode-cn.com/problems/successor-lcci/)
 思路：递归找到中序遍历的节点顺序，存储下来，然后找到要求节点的下一个节点
 
+#### 17. [钥匙与房间](https://leetcode-cn.com/problems/keys-and-rooms/submissions/)
+思路：将有钥匙的关系转化成两个节点之间的有向边，然后dfs(0,rooms)，最后检查是否所有节点都放问过了
+
+#### 18. [最终的安全状态](https://leetcode-cn.com/problems/find-eventual-safe-states/)
+思路：本质上就是检查节点是否在环里，如果不在任意一个环里，就满足题目要求，加入vector。还是按照DFS的老方法，visit存储了访问信息，label存储了是否在环里，如果visit=0表示没有访问过，1表示正在访问中，2表示已经结束访问。当进行DFS的时候，visit[i]=2，根据label信息返回；visit[i]=1，说明在环里，修改label=2，返回true；visit[i]=0，说明没有访问过，修改visit[i]=1，开始访问，对每一个孩子节点进行DFS，如果孩子已经访问在环里，修改visit和label，结束当前的访问。
+```
+class Solution {
+    vector<int> visit;
+    vector<int> label;
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        vector<int> re;
+        visit.resize(graph.size());
+        for(int i=0;i<visit.size();i++)
+            visit[i] = 0;
+        label.resize(graph.size());
+        for(int i=0;i<graph.size();i++)
+        {
+            bool r = dfs(i,graph);
+            if(!r)
+                re.push_back(i);
+        }
+        return re;
+
+    }
+    bool dfs(int pos,vector<vector<int>>& graph)
+    {
+        if(visit[pos]==2)
+        {
+            return label[pos];
+        }
+        else if(visit[pos]==1)
+        {
+            label[pos] = 1;
+            visit[pos] = 2;
+            return true;
+        }
+        else if(visit[pos]==0)
+        {
+            visit[pos] = 1;
+            for(int i=0;i<graph[pos].size();i++)
+            {
+                bool r = dfs(graph[pos][i],graph);
+                if(r)
+                {
+                    visit[pos] = 2;
+                    label[pos] = 1;
+                    return true;
+                }
+            }
+            visit[pos] = 2;
+            return false;
+        }
+    }
+};
+```
+
+#### 19. [被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+思路：DFS
+
 *还没有写完*
 #### 16. [收集树上所有苹果的最短时间](https://leetcode-cn.com/problems/minimum-time-to-collect-all-apples-in-a-tree/)
 

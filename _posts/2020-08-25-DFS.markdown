@@ -372,4 +372,50 @@ public:
 
 #### 13. [01矩阵](https://leetcode-cn.com/problems/01-matrix/)
 
+#### 14. [课程表](https://leetcode-cn.com/problems/course-schedule/)
+思路：将有先修关系的课程抽象成为一条有向边和两个节点，这个问题就可以转化为检查图上是否存在环。检查是否有环的方法，根据算法导论，通过DFS，未访问的点标记为白色0，访问了但还没结束DFS的点标记为灰色1，已经访问结束的标记为黑色2，所以对一个点DFS时如果后代节点是灰色1，则存在环。
+
+#### 15. [通知所有员工所需要的时间](https://leetcode-cn.com/problems/time-needed-to-inform-all-employees/)
+思路：递归+DFS，求根节点的通知时间时，先求出每一个子节点的通知时间，然后取其中的最大值，再加上根节点本身的通知时间
+```
+class Solution {
+    vector<vector<int>> link;
+    vector<int> visit;
+public:
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+        for(int i=0;i<n;i++)
+            visit.push_back(0);
+        link.resize(n);
+        
+        for(int i=0;i<manager.size();i++)
+        {
+            if(i==headID)
+                continue;
+            link[manager[i]].push_back(i);
+        }
+        int r = dfs(headID,informTime);
+        return r;    
+    }
+    int dfs(int i,vector<int>& informTime)
+    {
+        if(visit[i]==1)
+            return 0;
+        visit[i] = 1;
+        int x = 0;
+        int y = 0;
+        for(int j = 0;j<link[i].size();j++)
+        {
+            int t = dfs(link[i][j],informTime);
+            if(t>y)
+                y = t;
+        }
+        x += y;
+        x += informTime[i];
+        return x;
+    }
+};
+```
+
+
+
 

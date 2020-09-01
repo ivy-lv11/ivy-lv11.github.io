@@ -478,8 +478,61 @@ public:
 #### 19. [被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
 思路：DFS
 
-*还没有写完*
-#### 16. [收集树上所有苹果的最短时间](https://leetcode-cn.com/problems/minimum-time-to-collect-all-apples-in-a-tree/)
+#### 20. [中序后序构建二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+思路：递归，将inorder和postorder数组进行划分，分成三部分（左子树、根节点、右子树），然后递归。空数组返回NULL，只有一个元素的数组返回单节点
+
+#### 21. [喧闹与富有](https://leetcode-cn.com/problems/loud-and-rich/)
+思路：将richer关系构建为有向边，然后DFS
+
+#### 22. [收集树上所有苹果的最短时间](https://leetcode-cn.com/problems/minimum-time-to-collect-all-apples-in-a-tree/)
+思路：利用DFS，从叶子节点向根节点传播，每传播一层时间+2
+代码如下：
+```
+class Solution {
+    vector<vector<int>> link;
+    vector<int> visit;
+    vector<int> time;
+public:
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        link.resize(n);
+        for(int i=0;i<edges.size();i++)
+        {
+            int x = edges[i][0];
+            int y = edges[i][1];
+            link[y].push_back(x);
+            link[x].push_back(y);
+        }
+        for(int i=0;i<n;i++)
+        {
+            visit.push_back(0);
+            time.push_back(0);
+        }
+        dfs(0,hasApple);
+        return time[0];
+    }
+    void dfs(int num,vector<bool>& hasApple)
+    {
+        if(visit[num]==2)
+            return;
+        if(visit[num]==1)
+            return ;
+        if(visit[num]==0)
+        {
+            visit[num] = 1;
+            for(int j=0;j<link[num].size();j++)
+            {
+                dfs(link[num][j],hasApple);
+                if(visit[link[num][j]]==2)
+                    time[num] += time[link[num][j]];
+
+            }
+            if((hasApple[num] || time[num]!=0)&& num!=0)
+                time[num] +=2;
+            visit[num] = 2;          
+        }
+    }  
+};
+```
 
 
 

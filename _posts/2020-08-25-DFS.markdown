@@ -606,6 +606,89 @@ public:
 #### 27. [课程安排](https://leetcode-cn.com/problems/course-schedule-iv/)
 思路：构建有向图，在图上DFS看是否是后代节点
 
+#### 28. 岛屿面积
+思路：DFS
+
+#### 29. [服务器数量](https://leetcode-cn.com/problems/count-servers-that-communicate/)
+思路：DFS
+```
+int dfs(int x,int y,vector<vector<int>>& grid)
+    {
+        if(visit[x][y]==1)//访问过，返回0
+            return 0;
+        if(grid[x][y]==0)//没有服务器，返回0
+            return 0;
+        visit[x][y] = 1;
+        int sum = 1;
+        for(int i=0;i<grid[0].size();i++)//对同一列进行DFS
+        {
+            sum += dfs(x,i,grid);
+        }
+        for(int i=0;i<grid.size();i++)//对同一行进行DFS
+        {
+            sum += dfs(i,y,grid);
+        }
+        return sum;
+    }
+```
+
+#### 30. [节点间的通路](https://leetcode-cn.com/problems/route-between-nodes-lcci/)
+思路：简单题，直接DFS找
+
+#### 31. [最小高度树](https://leetcode-cn.com/problems/minimum-height-trees/)
+思路：DFS，但好像有两个测试用例过不了orz。。。
+
+#### 32. [岛屿最大面积](https://leetcode-cn.com/problems/max-area-of-island/)
+思路：DFS
+```
+class Solution {
+    vector<vector<int>> visit;//记录是否访问过
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int M = grid.size();
+        int N = grid[0].size();
+        visit.resize(M);
+        for(int i=0;i<M;i++)//初始化visit
+        {
+            for(int j=0;j<N;j++)
+                visit[i].push_back(0);
+        }
+
+        int max = 0;
+        for(int i=0;i<M;i++)
+        {
+            for(int j=0;j<N;j++)
+            {
+                int t = dfs(i,j,grid);
+                if(t>max)
+                    max = t;
+            }
+        }
+        return max;
+    }
+    int dfs(int x,int y,vector<vector<int>>& grid)
+    {
+        if(visit[x][y]==1)//访问过，返回0
+            return 0;
+        if(grid[x][y]==0)//该节点=0，返回0
+            return 0;
+        visit[x][y] = 1;
+        int sum = 1;
+        if(x+1<grid.size())
+            sum += dfs(x+1,y,grid);
+        if(y+1<grid[0].size())
+            sum += dfs(x,y+1,grid);
+        if(x-1>=0)
+            sum += dfs(x-1,y,grid);
+        if(y-1>=0)
+            sum += dfs(x,y-1,grid);
+        return sum;
+    }
+};
+
+```
+
+
 
 
 

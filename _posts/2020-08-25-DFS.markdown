@@ -6,7 +6,7 @@ image:  07.jpg
 tags:   Home
 ---
 ## 记录leetcode上面DFS的题目
-#### 1. 1519
+#### 1. [子树中标签相同的节点数](https://leetcode-cn.com/problems/number-of-nodes-in-the-sub-tree-with-the-same-label/)
 思路：无向图上的DFS。用link作为邻接矩阵，用count记下子树中每个字母的出现次数
 ```
 class Solution {

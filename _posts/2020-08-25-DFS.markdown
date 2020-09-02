@@ -600,6 +600,13 @@ public:
 };
 ```
 
+#### 26. [可以到达所有点的最少点数目](https://leetcode-cn.com/problems/minimum-number-of-vertices-to-reach-all-nodes/)
+思路：这道题目的本质是找到入度为0的点集。因为如果a到b有边，则b能到达的点a也能到达，且a比b多到达a，而图上存在点集到达所有点，所以只要找到入度为0的点集即可。
+
+#### 27. [课程安排](https://leetcode-cn.com/problems/course-schedule-iv/)
+思路：构建有向图，在图上DFS看是否是后代节点
+
+
 
 
 

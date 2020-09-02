@@ -534,6 +534,72 @@ public:
 };
 ```
 
+#### 23. [二分图](https://leetcode-cn.com/problems/is-graph-bipartite/)
+思路：用DFS，遇到已经访问的节点，判断颜色是否矛盾；遇到未访问的节点，标记访问过，记录颜色，对它的孩子节点进行染色DFS，代码见下
+```
+bool dfs(int pos,vector<vector<int>>& graph,int color)
+    {
+        if(visit[pos]==1)//已经访问过
+        {
+            if(color==colors[pos])//颜色是否矛盾
+                return true;
+            else
+                return false; 
+        }
+        visit[pos] = 1;//标记访问过了
+        colors[pos] = color;//标记颜色
+        int c = color^1;
+        for(int i=0;i<graph[pos].size();i++)
+        {
+            bool r = dfs(graph[pos][i],graph,c);
+            if(r==false)
+                return false;
+        }
+        return true;
+        
+    }
+```
+
+#### 24. [祖父节点是偶数](https://leetcode-cn.com/problems/sum-of-nodes-with-even-valued-grandparent/submissions/)
+思路：在树上深度优先搜索（DFS），遇到偶数节点获取它的孙节点，求和。
+
+#### 25. [克隆图](https://leetcode-cn.com/problems/clone-graph/)
+思路：用一个集合存储已经创建的节点值，用一个vector存储创建节点的指针，clone(Node* ptr)的时候，如果ptr节点已经被创建了，到vector里面找到返回指针；如果没有，创建一个新的节点，对ptr的子节点进行遍历，递归调用clone
+```
+class Solution {
+    vector<Node*> create;//存储指针
+    set<int> val_set;//值的集合，便于查找
+public:
+    Node* cloneGraph(Node* node) {
+        Node* ptr = clone(node);
+        return ptr;
+    }
+    Node* clone(Node* node)
+    {
+        if(node==NULL)
+            return NULL;
+        if(val_set.find(node->val)!=val_set.end())//创建过了
+        {
+            for(int i=0;i<100;i++)
+            {
+                if(create[i]!=NULL&& create[i]->val == node->val)
+                    return create[i];
+            }
+        }
+        Node* ptr= new Node(node->val);//开始创建并拷贝
+        val_set.insert(node->val);
+        create.push_back(ptr);
+        for(int i=0;i<node->neighbors.size();i++)
+        {
+            Node* child = node->neighbors[i];
+            Node* p=clone(child);
+            ptr->neighbors.push_back(p);
+        }
+        return ptr;
+    }
+};
+```
+
 
 
 

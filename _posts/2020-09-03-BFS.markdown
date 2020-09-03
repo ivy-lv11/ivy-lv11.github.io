@@ -129,3 +129,14 @@ public:
     }
 };
 ```
+
+#### 3. [特定深度的节点列表](https://leetcode-cn.com/problems/list-of-depth-lcci/)
+思路：BFS，方法同第一题
+
+#### 4. [之字形打印二叉树](https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/)
+思路：BFS，先得到和第一题一样层序遍历的结果，然后对其中奇数层进行反转，使用algorithm.h中的
+```
+reverse(t.begin(),t.end());
+```
+
+#### 5. 扁平化二叉树

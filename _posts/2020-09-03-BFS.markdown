@@ -1,0 +1,131 @@
+---
+layout: post
+title:  Leetcode-BFS
+date:   2020-09-03 07:45:35 +0300
+image:  05.jpg
+tags:   Home
+---
+### 用来记录leetcode上面关于BFS的题目
+#### 1. [最深层的节点和](https://leetcode-cn.com/problems/deepest-leaves-sum/)
+思路：直接用算法导论上面BFS的算法模板即可，树上的BFS
+```
+class Solution {
+public:
+    int deepestLeavesSum(TreeNode* root) {
+        deque<TreeNode*> queue;
+        int this_layer = 1;
+        int next_layer = 0;
+        int sum = 0;
+        queue.push_back(root);
+        TreeNode* ptr ;
+        while(queue.empty()==false)
+        {
+            if(this_layer ==0)
+            {
+                this_layer = next_layer;
+                next_layer = 0;
+                sum  = 0;
+            }
+            ptr = queue[0];
+            queue.pop_front();
+            sum += ptr->val;
+            this_layer --;
+            if(ptr!=NULL)
+            {
+                if(ptr->left!=NULL)
+                {
+                    queue.push_back(ptr->left);
+                    next_layer++;
+                }
+                if(ptr->right!=NULL)
+                {
+                    queue.push_back(ptr->right);
+                    next_layer++;
+                }
+            }
+
+        } 
+        return sum;
+    }
+};
+```
+#### 2. [腐烂的橘子](https://leetcode-cn.com/problems/rotting-oranges/submissions/)
+思路：图上的BFS，类似这种一圈一圈向外传播的一般都用BFS
+```
+class Solution {
+    vector<vector<int>> visit;
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        deque<pair<int,int>> queue;
+        int N = grid.size();
+        int M = grid[0].size();
+        visit.resize(N);
+        for(int i=0;i<N;i++)
+        {
+            for(int j=0;j<M;j++)
+                visit[i].push_back(0);
+        }
+
+        int result = 0;
+        int this_layer = 0;
+        int next_layer = 0;
+        for(int i=0;i<N;i++)
+        {
+            for(int j=0;j<M;j++)
+            {
+                
+                if(grid[i][j]==2)
+                {
+                        visit[i][j] = 1;
+                        queue.push_back(pair<int,int>(i,j));
+                        this_layer ++;
+                }
+            }
+        }
+        while(queue.empty()==false)
+        {
+            if(this_layer==0)
+            {
+                result++;
+                this_layer = next_layer;
+                next_layer = 0;
+            }
+            int x = queue[0].first;
+            int y = queue[0].second;
+            queue.pop_front();
+            this_layer--;
+            if(x+1<N && visit[x+1][y]==0 && grid[x+1][y]==1)
+            {
+                queue.push_back(pair<int,int>(x+1,y));
+                visit[x+1][y] = 1;
+                next_layer++;
+            }
+            if(y+1<M && visit[x][y+1]==0 && grid[x][y+1]==1)
+            {
+                queue.push_back(pair<int,int>(x,y+1));
+                visit[x][y+1] = 1;
+                next_layer++;
+            }
+            if(x-1>=0 && visit[x-1][y]==0 && grid[x-1][y]==1)
+            {
+                queue.push_back(pair<int,int>(x-1,y));
+                visit[x-1][y] = 1;
+                next_layer++;
+            }
+            if(y-1>=0 && visit[x][y-1]==0 && grid[x][y-1]==1)
+            {
+                queue.push_back(pair<int,int>(x,y-1));
+                visit[x][y-1] = 1;
+                next_layer++;
+            }
+        }
+        for(int i=0;i<N;i++)
+        {
+            for(int j=0;j<M;j++)
+                if(visit[i][j]==0 && grid[i][j]==1)
+                    return -1;
+        }
+        return result;     
+    }
+};
+```

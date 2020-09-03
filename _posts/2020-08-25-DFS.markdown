@@ -687,6 +687,71 @@ public:
 };
 
 ```
+#### 33. [跳跃游戏](https://leetcode-cn.com/problems/jump-game-iii/submissions/)
+思路：使用DFS，用visit存储是否访问，visit[i][0]表示向左跳跃，visit[i][0]表示向右。
+```
+class Solution {
+    vector<vector<int>> visit;
+public:
+    void clear()//清空访问信息
+    {
+        for(int i=0;i<visit.size();i++)
+        {
+            for(int j=0;j<visit[0].size();j++)
+                visit[i][j] = 0;
+        }
+    }
+    bool canReach(vector<int>& arr, int start) {
+        int N = arr.size();
+        visit.resize(N);
+        for(int i=0;i<N;i++)
+            for(int j=0;j<2;j++)
+                visit[i].push_back(0);
+        
+        vector<int> position;
+        for(int i=0;i<N;i++)
+            if(arr[i]==0)
+                position.push_back(i);
+        
+        for(auto v:position)
+        {
+            clear();
+            bool r = dfs(arr,start,v);//检查是否可以跳到v
+            if(r)
+                return true;
+        }
+        return false;
+        
+    }
+    bool dfs(vector<int>& arr,int start,int target)
+    {
+        if(start==target)//已经到达，返回true
+            return true;
+        if(start>=arr.size())//跳出界了，返回false
+            return false;
+        if(start<0)//跳出界了，返回false
+            return false;
+        if(visit[start][0]==1 && visit[start][1]==1)//两个方向都已经访问过了，进环
+            return false;
+        bool r1,r2;
+        r1 =false;
+        r2 = false;
+        if(visit[start][0]==0){//向右
+        visit[start][0] = 1;
+        r1 = dfs(arr,start+arr[start],target);
+        if(r1)
+            return true;
+        }
+        if(visit[start][1]==0){//向左
+        visit[start][1] = 1;
+        r2 = dfs(arr,start-arr[start],target);
+        if(r2)
+            return true;
+        }
+        return false;
+    }
+};
+```
 
 
 

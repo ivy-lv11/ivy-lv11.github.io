@@ -753,6 +753,11 @@ public:
 };
 ```
 
+#### 34. [联通网络的操作次数](https://leetcode-cn.com/problems/number-of-operations-to-make-network-connected/)
+思路：这个题目本质上就是求连通分量的数目，常规动作DFS求连通分量数目
+
+
+
 
 
 

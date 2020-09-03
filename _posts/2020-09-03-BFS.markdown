@@ -139,4 +139,7 @@ public:
 reverse(t.begin(),t.end());
 ```
 
-#### 5. 扁平化二叉树
+#### 5. [扁平化二叉树](https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/)
+
+
+

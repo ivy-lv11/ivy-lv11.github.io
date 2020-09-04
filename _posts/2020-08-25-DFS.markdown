@@ -756,6 +756,8 @@ public:
 #### 34. [联通网络的操作次数](https://leetcode-cn.com/problems/number-of-operations-to-make-network-connected/)
 思路：这个题目本质上就是求连通分量的数目，常规动作DFS求连通分量数目
 
+#### 35. [矩阵中的最长增加路径](https://leetcode-cn.com/problems/longest-increasing-path-in-a-matrix/)
+思路：DFS，用visit记录访问信息，用label记录当前点出发的最长上升路径长度，对图进行一次遍历即可
 
 
 

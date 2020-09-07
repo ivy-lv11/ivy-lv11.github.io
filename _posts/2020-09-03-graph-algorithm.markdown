@@ -187,3 +187,83 @@ public:
     }
 };
 ```
+
+例题：
+#### 1.[概率最大的路径](https://leetcode-cn.com/problems/path-with-maximum-probability/)
+
+#### 2. [阈值距离内邻居最少的城市](https://leetcode-cn.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/)
+思路：Dijkstra的模板！！
+```
+const int INF = 1e9;
+typedef pair<int,int> PII;
+class Solution {
+    vector<vector<int>> link;
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<int> re;
+        link.resize(n);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+                link[i].push_back(-1);
+        }
+        for(auto v:edges)
+        {
+            link[v[0]][v[1]] = v[2];
+            link[v[1]][v[0]] = v[2];
+        }
+        for(int i=0;i<n;i++)
+        {
+            vector<int> temp= dijkstra(i);
+            int t = 0;
+            for(auto v:temp)
+            {
+                if(v<=distanceThreshold)
+                    t++;
+            }
+            re.push_back(t);
+        }
+
+        int min = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(re[min]>=re[i])
+                min = i;
+        }
+        return min;
+        
+    }
+    vector<int> dijkstra(int start)
+    {
+        vector<bool> visit;
+        vector<int> dist;
+        vector<int> label;
+        int n = link.size();
+        for(int i=0;i<n;i++)
+        {
+            dist.push_back(INF);
+            label.push_back(INF);
+            visit.push_back(false);
+        }
+        dist[start] = 0;
+        for(int i=0;i<n;i++)
+        {
+            vector<int>::iterator it = min_element(dist.begin(),dist.end());
+            int u = it-dist.begin();
+            label[u] = dist[u];
+            visit[u] = true;
+            for(int v = 0;v<n;v++)
+            {
+                if(link[u][v]!=-1)
+                {
+                    if(visit[v]==false && dist[v]>label[u]+link[u][v])
+                        dist[v]= label[u]+link[u][v];
+                }
+            }
+            dist[u] = INF;
+
+        }
+        return label;
+    }
+};
+```

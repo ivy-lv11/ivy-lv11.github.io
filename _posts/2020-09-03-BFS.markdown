@@ -54,82 +54,67 @@ public:
 ```
 class Solution {
     vector<vector<int>> visit;
+    vector<vector<int>> time;
+    int dirs[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        deque<pair<int,int>> queue;
         int N = grid.size();
         int M = grid[0].size();
         visit.resize(N);
+        time.resize(N);
+        deque<pair<int,int>> queue;
         for(int i=0;i<N;i++)
         {
-            for(int j=0;j<M;j++)
-                visit[i].push_back(0);
-        }
-
-        int result = 0;
-        int this_layer = 0;
-        int next_layer = 0;
-        for(int i=0;i<N;i++)
-        {
-            for(int j=0;j<M;j++)
+            for(int j = 0;j<M;j++)
             {
-                
                 if(grid[i][j]==2)
                 {
-                        visit[i][j] = 1;
-                        queue.push_back(pair<int,int>(i,j));
-                        this_layer ++;
+                    visit[i].push_back(1);
+                    time[i].push_back(0);
+                    queue.push_back(pair<int,int>(i,j));
+                }
+                else
+                {
+                    visit[i].push_back(0);
+                    time[i].push_back(-1);
                 }
             }
         }
+
+        int max = 0;
         while(queue.empty()==false)
         {
-            if(this_layer==0)
-            {
-                result++;
-                this_layer = next_layer;
-                next_layer = 0;
-            }
             int x = queue[0].first;
             int y = queue[0].second;
             queue.pop_front();
-            this_layer--;
-            if(x+1<N && visit[x+1][y]==0 && grid[x+1][y]==1)
+            for(int n=0;n<4;n++)
             {
-                queue.push_back(pair<int,int>(x+1,y));
-                visit[x+1][y] = 1;
-                next_layer++;
+                int nx = x+dirs[n][0];
+                int ny = y+dirs[n][1];
+                if(nx>=0 && nx<N && ny>=0 && ny<M && visit[nx][ny]==0 && grid[nx][ny]==1)
+                {
+                    visit[nx][ny] = 1;
+                    queue.push_back(pair<int,int>(nx,ny));
+                    time[nx][ny] = time[x][y]+1;
+                    if(time[nx][ny]>max)
+                        max = time[nx][ny];
+                }
             }
-            if(y+1<M && visit[x][y+1]==0 && grid[x][y+1]==1)
-            {
-                queue.push_back(pair<int,int>(x,y+1));
-                visit[x][y+1] = 1;
-                next_layer++;
-            }
-            if(x-1>=0 && visit[x-1][y]==0 && grid[x-1][y]==1)
-            {
-                queue.push_back(pair<int,int>(x-1,y));
-                visit[x-1][y] = 1;
-                next_layer++;
-            }
-            if(y-1>=0 && visit[x][y-1]==0 && grid[x][y-1]==1)
-            {
-                queue.push_back(pair<int,int>(x,y-1));
-                visit[x][y-1] = 1;
-                next_layer++;
-            }
+            visit[x][y] = 2;
         }
+
         for(int i=0;i<N;i++)
         {
             for(int j=0;j<M;j++)
-                if(visit[i][j]==0 && grid[i][j]==1)
+            {
+                if(grid[i][j]==1 && visit[i][j]==0)
                     return -1;
+            }
         }
-        return result;     
+        return max; 
     }
 };
 ```
-
 #### 3. [特定深度的节点列表](https://leetcode-cn.com/problems/list-of-depth-lcci/)
 思路：BFS，方法同第一题
 
@@ -141,5 +126,61 @@ reverse(t.begin(),t.end());
 
 #### 5. [扁平化二叉树](https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/)
 
+#### 6. [01矩阵](https://leetcode-cn.com/problems/01-matrix/submissions/)
+```
+class Solution {
+private:
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};//用来获取四个方向的点
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        vector<vector<int>> dist;//距离
+        deque<pair<int,int>> queue;
+        vector<vector<int>> visit;//是否访问结束
+        visit.resize(matrix.size());
+        dist.resize(matrix.size());
+        for(int i=0;i<matrix.size();i++)
+        {
+            for(int j=0;j<matrix[0].size();j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    queue.push_back(pair<int,int>(i,j));
+                    visit[i].push_back(1);
+                    dist[i].push_back(0);
+                }
+                else
+                {
+                    visit[i].push_back(0);
+                    dist[i].push_back(-1);
+                }
+                
+            }
+        }
+
+        while(queue.empty()==false)
+        {
+            int i = queue[0].first;
+            int j = queue[0].second;
+            queue.pop_front();
+            for(int n=0;n<4;n++)
+            {
+                int x = i+dirs[n][0];
+                int y = j+dirs[n][1];
+                if(x>=0 && x<matrix.size() && y>=0 && y<matrix[0].size() && visit[x][y]==0)
+                {
+                    queue.push_back(pair<int,int>(x,y));
+                    visit[x][y] = 1;
+                    dist[x][y] = dist[i][j]+1;
+                }
+            }
+
+        }
+        return dist;
+    }
+};
+```
+
+#### 7. [地图分析](https://leetcode-cn.com/problems/as-far-from-land-as-possible/)
+直接套用上一题的模板
 
 

@@ -1,0 +1,54 @@
+---
+layout: post
+title:  Leetcode-Stack
+date:   2020-09-03 07:45:35 +0300
+image:  06.jpg
+tags:   Home
+---
+
+## leetcode上面用stack解决的问题
+#### 1. [逆波兰表达式求值](https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/)
+思路：见算法导论基础数据结构——栈
+```
+class Solution {
+    stack<string> st;
+public:
+    int evalRPN(vector<string>& tokens) {
+        for(auto v:tokens)
+        {
+            if(v=="*" || v=="+" || v=="/" || v=="-")
+            {
+                //操作符
+                string s1 = st.top();
+                st.pop();
+                string s2 = st.top();
+                st.pop();
+                int x2 = atoi(s1.c_str());
+                int x1 = atoi(s2.c_str());
+                int d;
+                if(v=="*")
+                    d = x1*x2;
+                else if(v=="/")
+                    d = x1/x2;
+                else if(v=="+")
+                    d = x1+x2;
+                else if(v=="-")
+                    d = x1-x2;
+                char temp[20];
+                sprintf(temp,"%d",d);
+                st.push(string(temp));
+            }
+            else
+            {
+                //operand
+                st.push(v);
+            }
+        }
+        return atoi(st.top().c_str());
+    }
+};
+```
+#### 2. [移除k位数字](https://leetcode-cn.com/problems/remove-k-digits/)
+划重点：**2019南大开放日机试题！！！**
+思路：使用单调栈
+

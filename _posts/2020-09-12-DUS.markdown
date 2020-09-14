@@ -1,0 +1,78 @@
+---
+layout: post
+title:  Leetcode-DUS
+date:   2020-09-03 07:45:35 +0300
+image:  05.jpg
+tags:   Home
+---
+
+## 并查集的题目
+#### 1. [账户合并](https://leetcode-cn.com/problems/accounts-merge/submissions/)
+```
+class Solution 
+{
+    set<string> email_set;
+    map<string,int> email_id;
+    vector<int> f;
+    int count = 0;
+    public:
+        void merge(int x,int y)
+        {
+            int fx = find(x);
+            int fy = find(y);
+            if(fx!=fy)
+                f[fy] = fx;
+
+        }
+        int find(int x)
+        {
+            return x==f[x]?x:find(f[x]);
+        }
+        vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) 
+        {
+            //初始化
+            f.resize(accounts.size());
+            for(int i=0;i<f.size();i++)
+                f[i] = i;
+            //并查集
+            for(int i=0;i<accounts.size())
+            {
+                string name = accounts[i][0];
+                for(int j=1;j<accounts[i].size();j++)
+                {
+                    string email = accounts[i][j];
+                    if(email_set.count(email)==0)
+                    {
+                        //not find
+                        email_set.insert(email);
+                        email_id[email] = i;
+                    }
+                    else
+                    {
+                        merge(email_id[email],i);
+                    }
+                }
+            }
+
+            map<int,set<string>> accMail;
+            for(int i=0;i<accounts.size();i++)
+            {
+                int father = find(i);
+                for(int j=1;j<accounts[i].size();i++)
+                    accMail[father].insert(accounts[i][j]);
+            }
+
+            vector<vector<string>> re;
+            re.resize(accMail.size());
+            for(int i=0;i<accMail.size();i++)
+            {
+                re[i].push_back(accounts[i][0]);
+                for(set<string>::iterator it = accMail[i].begin();it!=accMail[i].end();it++)
+                    re[i].push_back(*it);
+
+            }
+            return re;
+        }
+};
+
+```
